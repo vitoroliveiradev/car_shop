@@ -15,7 +15,6 @@ export const App = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
-      console.log(user);
       setUser(user)
     })
   }, [auth])
@@ -24,8 +23,6 @@ export const App = () => {
   if(loadingUser) {
     return <p>Carregando...</p>
   }
-
-  console.log(auth)
 
   return (
     <div>

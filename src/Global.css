@@ -8,4 +8,46 @@
 a {
   text-decoration: none;
   border: none;
+  color: #000;
+}
+
+.error {
+  background-color: red;
+  color: #FFF;
+  padding: .2rem .4rem;
+  border-radius: .5rem;
+  opacity: .8;
+  text-align: center;
+  font-size: .9rem;
+}
+
+.btn {
+  text-align: center;
+}
+
+.btnLogout {
+  font-size: .9rem;
+  color: #FFF;
+  margin-right: 1rem;
+  transition: all .3s linear;
+  padding: .2rem .4rem;
+  border-radius: .325rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btnLogout:hover {
+  color: red;
+  background-color: #d5d5d5;
+}
+
+.noregister {
+  font-size: .7rem;
+  position: relative;
+  bottom: .7rem;
+
+}
+
+.noregister:hover {
+  text-decoration: underline;
 }

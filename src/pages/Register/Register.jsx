@@ -1,5 +1,7 @@
-import styled from "styled-components"
-import { useState, useEffect } from "react"
+import styled, { keyframes } from "styled-components"
+import { useState, useEffect } from "react";
+import { fadeIn, fadeInLeft } from 'react-animations';
+import { useAuthentication } from "../../hooks/useAuthentication";
 
 export const Register = () => {
   const [inputName, setInputName] = useState("");
@@ -7,11 +9,44 @@ export const Register = () => {
   const [inputConfirmEmail, setInputConfirmEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputConfirmPassword, setInputConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+  const { createUser, loading, error: authError } = useAuthentication();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    setError("");
+
+    const user = {
+      inputName,
+      inputEmail,
+      inputPassword,
+    }
+
+    if(inputEmail !== inputConfirmEmail) {
+      setError("O e-mails precisam ser iguais!");
+      return;
+    }
+
+    if(inputPassword !== inputConfirmPassword) {
+      setError("As senhas precisam ser iguais!");
+      return;
+    }
+
+    const res = await createUser(user);
+
+    console.log(res);
+  }
+
+  useEffect(() => {
+    if(authError) {
+      setError(authError);
+    }
+  }, [authError])
 
   return (
     <div>
-      
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <FormTitle>Cadastrar usuário</FormTitle>
         <label>
           <input 
@@ -59,17 +94,22 @@ export const Register = () => {
           />
         </label>
         <label>
-          <button>
+          <button className="btn">
             Cadastrar
           </button>
         </label>
+        {error && <p className="error">{error}</p>}
       </Form>
     </div>
   )
 }
 
+const fadeAnimation = keyframes`${fadeIn}`;
+const fadeLeftAnimation = keyframes`${fadeInLeft}`;
+
 const Form = styled.form`
-  width: 60%;
+  animation: 1s ${fadeAnimation};
+  width: 40%;
   margin: 4rem auto;
   display: flex;
   align-items: center;
@@ -81,12 +121,14 @@ const Form = styled.form`
   label {
     margin-bottom: 1.5rem;
     width: 100%;
+    text-align: center;
+    animation: .4s ${fadeLeftAnimation};
 
     input {
       width: 100%;
       height: 30px;
       border: none;
-      border-bottom: 2px solid #860202;
+      border-bottom: 2px solid #bb0101;
       outline: none;
       padding-left: .1rem;
       &::placeholder {
@@ -96,6 +138,21 @@ const Form = styled.form`
 
       &:active > &::placeholder {
         color: #420202;
+      }
+    }
+
+    button {
+      width: 45%;
+      height: 35px;
+      background-color: #f34e4e;
+      border: none;
+      color: #FFF;  
+      border-radius: .3rem;
+      cursor: pointer;
+      transition: all .3s linear;
+
+      &:hover {
+        background-color: #ff1a1a;
       }
     }
   }
