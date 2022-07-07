@@ -1,11 +1,16 @@
 import styled, { keyframes } from "styled-components"
 import { useState, useEffect } from "react";
 import { fadeIn, fadeInLeft } from 'react-animations';
-import { useInsertDocument } from "../../hooks/useInsertDocuments";
-import { useNavigate } from "react-router-dom";
+import { useUpdateDocument } from "../../hooks/useUpdateDocument";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
+import { useFetchDocument } from "../../hooks/useFetchDocument";
 
-export const NewCar = () => {
+export const EditPost = () => {
+  const { id } = useParams();
+
+  const { updateDocument, response } = useUpdateDocument("posts");
+
   const [carName, setCarName] = useState("");
   const [carYear, setCarYear] = useState("");
   const [carBrand, setCarBrand] = useState("");
@@ -13,16 +18,29 @@ export const NewCar = () => {
   const [carValue, setCarValue] = useState("");
   const [carDescription, setCarDescription] = useState("");
   const [error, setError] = useState(null);
-  const { insertDocument, response } = useInsertDocument("posts");
   const navigate = useNavigate();
   const { user } = useAuthValue();
+
+  const { document: post, loading, error: authError } = useFetchDocument("posts", id);
+
+  useEffect(() => {
+    
+    if(post) {
+      setCarName(post.name);
+      setCarYear(post.year);
+      setCarBrand(post.brand);
+      setCarImage(post.image);
+      setCarValue(post.value);
+      setCarDescription(post.desc)
+    }
+  }, [post])
   
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     setError("");
 
-    insertDocument({
+    const data = {
       name: carName,
       year: carYear,
       brand: carBrand,
@@ -31,14 +49,19 @@ export const NewCar = () => {
       desc: carDescription,
       createdBy: user.displayName,
       uid: user.uid,
-    })
+    }
+
+    updateDocument(id, data)
+    
+    console.log(response)
 
     navigate("/");
   }
+
   return (
     <div>
       <Form onSubmit={handleSubmit}>
-        <FormTitle>Cadastrar Veículo</FormTitle>
+        <FormTitle>Editar Veículo</FormTitle>
         <label>
           <input 
             type="text" 
@@ -94,7 +117,7 @@ export const NewCar = () => {
         </label>
         <label>
           <button className="btn">
-            Cadastrar Veículo
+            Editar
           </button>
         </label>
         {response.error && <p className="error">{response.error}</p>}
@@ -146,7 +169,7 @@ const Form = styled.form`
       min-height: 4rem;
       border: 2px solid #bb0101;
       padding: 4px;
-      font-size: .7rem;
+    font-size: .7rem;
     }
 
     button {

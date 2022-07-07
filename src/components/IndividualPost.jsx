@@ -5,11 +5,14 @@ export const IndividualPost = ({ post }) => {
   return (
     <Post>
       <img src={post.image} alt={post.image} />
-      <h3 className="carName">{post.name}</h3>
+      <h2 className="carName">{post.name}</h2>
       <div className="descContainer">
         <div className="desc">
-          <span>Ano: {post.year}</span>
-          <span>{post.value}</span>
+          <h3><span>Ano:</span> {post.year}</h3>
+          <h3><span>R$</span> {post.value}</h3>
+        </div>
+        <div className="author">
+          <p>Anunciado por: <span>{post.createdBy}</span></p>
         </div>
         <div className="carDetails">
           <h3>Sobre este carro</h3>
@@ -29,6 +32,19 @@ const Post = styled.div`
   margin: .5rem auto;
   text-align: center;
   box-shadow: 0px 10px 13px -7px #000000;
+
+  .author {
+    text-align: left;
+    font-style: italic;
+    font-size: .75rem;
+    font-weight: bold;
+
+    span {
+      color: red;
+    }
+  }
+
+  
 
   .carName {
     margin: 2rem 0;
@@ -54,6 +70,10 @@ const Post = styled.div`
   .desc {
     display: flex;
     justify-content: space-between;
+
+    h3 span {
+      color: red;
+    }
   }
 
   .carDetails {
@@ -70,7 +90,7 @@ const Post = styled.div`
       margin-top: .5rem;
       text-align: left;
       width: 90%;
-      font-size: .9rem;
+      font-size: .8rem;
       line-height: 1.2rem;
     }
 
@@ -83,11 +103,11 @@ const Post = styled.div`
     background-color: #797979;
     border-radius: 10px;
     transition: background .2s linear;
+    color: #FFF;
   }
 
   .backButton:hover {
     background-color: #000;
-    color: #FFF;
   }
 
 `

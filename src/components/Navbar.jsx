@@ -7,6 +7,14 @@ export const Navbar = () => {
   const { user } = useAuthValue();
   const { logout } = useAuthentication();
 
+  const handleLogout = () => {
+    const res = confirm("Deseja realmente sair ?");
+
+    if(res) {
+      logout();
+    }
+  }
+
   return (
     <Nav>
       <div>
@@ -46,7 +54,7 @@ export const Navbar = () => {
         {user && (
           <button 
             className="btnLogout"
-            onClick={logout}
+            onClick={handleLogout}
           >
           Sair
         </button>
@@ -89,6 +97,7 @@ const List = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
+  flex-wrap: wrap;
 
   a{
     font-size: .9rem;

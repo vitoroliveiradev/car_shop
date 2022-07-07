@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom"
 import { IndividualPost } from "../../components/IndividualPost";
 import { useFetchDocument } from "../../hooks/useFetchDocument";
+import Loading from "../../assets/loading.svg";
+import styled from "styled-components";
 
 export const PostDetail = () => {
   const { id } = useParams();
@@ -8,10 +10,23 @@ export const PostDetail = () => {
   const { document: post, error, loading  } = useFetchDocument("posts", id);
 
   return (
-    <div>
+    <Detail>
+      {loading && <img src={Loading} className="loading" alt="Carregando conteúdos" />}
+      {error && <p>{error}</p>}
       {post && (
         <IndividualPost post={post} />
       )}
-    </div>
+    </Detail>
   )
 }
+
+const Detail = styled.div`
+
+  .loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+`

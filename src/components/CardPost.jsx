@@ -13,6 +13,9 @@ export const CardPost = ({ post }) => {
           <p>R$ {post.value}</p>
           <p>{post.year}</p>        
         </div>
+        {post.createdBy && (
+          <Author>Anunciado por: <span>{post.createdBy}</span></Author>
+        )}
       </Link>
     </Card>
   )
@@ -22,7 +25,7 @@ const animateImg = keyframes`${zoomIn}`
 
 const Card = styled.div`
   text-align: center;
-  width: 300px;
+  width: 250px;
   height: auto;
   box-shadow: 0px 10px 13px -17px #000000;
   border: 2px solid #000;
@@ -58,5 +61,16 @@ const Card = styled.div`
     justify-content: space-between;
     padding: .4rem;
     margin-top: .5rem;
+  }
+`
+
+const Author = styled.p`
+  text-align: left;
+  font-style: italic;
+  font-size: .7rem;
+  margin-left: .2rem;
+
+  span {
+    color: red;
   }
 `

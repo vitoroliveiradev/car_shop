@@ -51,3 +51,30 @@ a {
 .noregister:hover {
   text-decoration: underline;
 }
+
+button.red {
+  background-color: #fe4545;
+  color: #FFF;
+}
+
+button.red:hover {
+  background-color: red;
+}
+
+button.edit {
+  background-color: #3aa33a;
+  color: #FFF;
+}
+
+button.edit:hover {
+  background-color: green;
+}
+
+button.see {
+  background-color: #4a4a4a;
+  color: #FFF;
+}
+
+button.see:hover {
+  background-color: black;
+}

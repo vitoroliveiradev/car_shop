@@ -17,6 +17,7 @@ import { About } from "./pages/About/About";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { PostDetail } from "./pages/PostDetail/PostDetail";
+import { EditPost } from "./pages/EditPost/EditPost";
 
 
 export const Router = () => {
@@ -39,6 +40,10 @@ export const Router = () => {
       <Route 
         path="/posts/create"
         element={user ? <NewCar /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/posts/edit/:id"
+        element={user ? <EditPost /> : <Navigate to="/login" />}
       />
       <Route 
         path="/about"
